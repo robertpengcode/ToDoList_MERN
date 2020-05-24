@@ -46,6 +46,7 @@ const TaskCard = ({ task }) => {
       </CardContent> */}
       {!task.completed ? (
         <CardActions>
+          {task.important ? <StarRateIcon color="secondary" /> : null}
           <IconButton>
             <DeleteIcon />
           </IconButton>
@@ -58,6 +59,7 @@ const TaskCard = ({ task }) => {
         </CardActions>
       ) : (
         <CardActions>
+          {task.important ? <StarRateIcon color="secondary" /> : null}
           <IconButton>
             <DeleteIcon />
           </IconButton>
@@ -70,11 +72,6 @@ const TaskCard = ({ task }) => {
         </CardActions>
       )}
       <CardHeader title={task.name} subheader={`Create On: ${createDate}`} />
-      {task.important ? (
-        <CardContent>
-          <StarRateIcon color="secondary" />
-        </CardContent>
-      ) : null}
     </Card>
   );
 };
