@@ -1,11 +1,11 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import cyan from '@material-ui/core/colors/cyan';
-import lime from '@material-ui/core/colors/lime';
+import pink from '@material-ui/core/colors/pink';
 
 const theme = createMuiTheme({
   palette: {
     primary: cyan,
-    secondary: lime,
+    secondary: pink,
   },
   status: {
     danger: 'orange',

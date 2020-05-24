@@ -14,6 +14,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import SaveIcon from "@material-ui/icons/Save";
 import UndoIcon from "@material-ui/icons/Undo";
+import StarRateIcon from "@material-ui/icons/StarRate";
 
 const useStyles = makeStyles({
   desStyle: {
@@ -68,8 +69,12 @@ const TaskCard = ({ task }) => {
           </IconButton>
         </CardActions>
       )}
-
       <CardHeader title={task.name} subheader={`Create On: ${createDate}`} />
+      {task.important ? (
+        <CardContent>
+          <StarRateIcon color="secondary" />
+        </CardContent>
+      ) : null}
     </Card>
   );
 };

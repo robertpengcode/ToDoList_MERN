@@ -3,6 +3,7 @@ import axios from "axios";
 import { Grid } from "@material-ui/core";
 import Bar from "./Bar";
 import Tasks from "./Tasks";
+import Form from "./Form";
 
 class App extends Component {
   constructor() {
@@ -29,7 +30,7 @@ class App extends Component {
       <Grid item><Bar /></Grid>
       <Grid item container >
         <Grid item xs={12} sm={9}><Tasks tasks={tasks}/></Grid>
-        <Grid item xs={12} sm={3}>right</Grid>
+        <Grid item xs={12} sm={3}><Form /></Grid>
       </Grid>
     </Grid>
 
