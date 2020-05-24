@@ -29,14 +29,15 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     //console.log(req.body);
-    const { name, category, description, important, dueDate } = req.body;
+    const { name, category, description, important, dueDate, completed } = req.body;
     try {
       const task = new Task({
         name,
         category,
         description,
         important,
-        dueDate
+        dueDate,
+        completed,
       });
       await task.save();
       res.send(task);
@@ -46,5 +47,16 @@ router.post(
     }
   }
 );
+
+// router.delete('/:id', async (req, res, next) => {
+//     const id = req.params.id
+//     try {
+//       const task = await Task.findOne(id)
+//       task.destroy()
+//       res.sendStatus(204)
+//     } catch (err) {
+//       next(err)
+//     }
+//   })
 
 module.exports = router;
