@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 //const today = moment();
-const today = moment().format("LLLL");
+const today = moment().format('MMMM Do YYYY');
 
 function Bar() {
   const classes = useStyles();  

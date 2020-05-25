@@ -22,28 +22,26 @@ const useStyles = makeStyles({
     fontSize: 18
   },
   root: {
-    //maxWidth: 250,
     width: 250,
     background: "#fff59d",
     margin: "1rem",
-    //maxHeight: 250
     height: 250
+  },
+  content: {
+    fontSize: 18,
+    color: "blue"
   }
 });
 
 const TaskCard = ({ task }) => {
   const classes = useStyles();
   const date = task.createDate;
+  const due = task.dueDate;
   const createDate = moment(date).format("l");
+  const dueDate = moment(due).format("l");
 
   return (
     <Card className={classes.root}>
-      {/* <CardContent>
-        <Typography variant="body2" color="textSecondary"
-         component="p" className={classes.desStyle}>
-           {`Note: ${task.description}`}
-        </Typography>
-      </CardContent> */}
       {!task.completed ? (
         <CardActions>
           {task.important ? <StarRateIcon color="secondary" /> : null}
@@ -72,6 +70,13 @@ const TaskCard = ({ task }) => {
         </CardActions>
       )}
       <CardHeader title={task.name} subheader={`Create On: ${createDate}`} />
+      {task.dueDate ? (
+        <CardContent>
+          <Typography variant="body2" className={classes.content}>
+            {`Due On: ${dueDate}`}
+          </Typography>
+        </CardContent>
+      ) : null}
     </Card>
   );
 };

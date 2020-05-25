@@ -19,9 +19,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: "1rem",
   },
   gridList: {
-    width: 900,
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)"
@@ -36,8 +36,8 @@ const Tasks = ({ tasks }) => {
   } else {
     return (
       <Container maxWidth="lg" className={classes.root}>
-        <GridList cellHeight={180} cols={3} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={3} style={{ height: "auto" }}>
+        <GridList cellHeight={180} className={classes.gridList}>
+          <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">Current</ListSubheader>
           </GridListTile>
           {tasks
@@ -46,8 +46,6 @@ const Tasks = ({ tasks }) => {
               <TaskCard key={task._id} task={task} />
             ))}
         </GridList>
-
-        <Divider variant="middle" />
 
         <GridList cellHeight={180} className={classes.gridList}>
           <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
