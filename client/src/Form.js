@@ -16,8 +16,8 @@ import {
 import { Grid } from "@material-ui/core";
 
 class Form extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       important: "",
@@ -52,8 +52,8 @@ class Form extends Component {
         dueDate: this.state.dueDate
     }
     try {
-      await axios.post("/api/tasks", task).data;
-    
+      const newTask = (await axios.post("/api/tasks", task)).data;
+      this.props.createTask(newTask);
       this.setState({
         name: "",
         important: false,

@@ -49,15 +49,16 @@ router.post(
   }
 );
 
-// router.delete('/:id', async (req, res, next) => {
-//     const id = req.params.id
-//     try {
-//       const task = await Task.findOne(id)
-//       task.destroy()
-//       res.sendStatus(204)
-//     } catch (err) {
-//       next(err)
-//     }
-//   })
-
+router.delete('/:id', async (req, res, next) => {
+    const id = req.params.id
+    console.log('id rounte', id);
+    try {
+      await Task.deleteOne({_id: id});
+      res.json({msg: 'deleted!'});
+    } catch (err) {
+      console.log('err!!!')
+      //next(err)
+    }
+})
+// sendStatus(204).
 module.exports = router;

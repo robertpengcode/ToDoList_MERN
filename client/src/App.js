@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       tasks: []
     };
+    this.createTask = this.createTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   async componentDidMount() {
@@ -18,8 +20,24 @@ class App extends Component {
     this.setState({ tasks });
   }
 
+  createTask(task) {
+    this.setState({tasks: [...this.state.tasks, task]});
+  }
+
+  async deleteTask(id) {
+    try {
+      await axios.delete(`/api/tasks/${id}`);
+      console.log('deleted!!!!!', id)
+      this.setState({tasks: this.state.tasks.filter(_task => _task._id !== id)});
+    }
+    catch(ex) {
+      console.log(ex)
+    }
+  }
+
   render() {
     const { tasks } = this.state;
+    const {createTask, deleteTask} = this;
     return (
       // <Fragment>
       //   <Bar />
@@ -29,8 +47,8 @@ class App extends Component {
     <Grid container direction="column">
       <Grid item><Bar /></Grid>
       <Grid item container >
-        <Grid item xs={12} sm={9}><Tasks tasks={tasks}/></Grid>
-        <Grid item xs={12} sm={3}><Form /></Grid>
+        <Grid item xs={12} sm={9}><Tasks tasks={tasks} deleteTask={deleteTask}/></Grid>
+        <Grid item xs={12} sm={3}><Form createTask={createTask}/></Grid>
       </Grid>
     </Grid>
 

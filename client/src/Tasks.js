@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Tasks = ({ tasks }) => {
+const Tasks = ({ tasks, deleteTask }) => {
   const classes = useStyles();
   console.log(tasks);
   if (!tasks) {
@@ -43,7 +43,7 @@ const Tasks = ({ tasks }) => {
           {tasks
             .filter(task => task.completed === false && task.history === false)
             .map(task => (
-              <TaskCard key={task._id} task={task} />
+              <TaskCard key={task._id} task={task} deleteTask={deleteTask}/>
             ))}
         </GridList>
 

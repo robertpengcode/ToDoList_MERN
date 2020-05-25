@@ -33,19 +33,20 @@ const useStyles = makeStyles({
   }
 });
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, deleteTask }) => {
   const classes = useStyles();
   const date = task.createDate;
   const due = task.dueDate;
   const createDate = moment(date).format("l");
   const dueDate = moment(due).format("l");
+  const taskId = task._id;
 
   return (
     <Card className={classes.root}>
       {!task.completed ? (
         <CardActions>
           {task.important ? <StarRateIcon color="secondary" /> : null}
-          <IconButton>
+          <IconButton onClick={() => deleteTask(taskId)}>
             <DeleteIcon />
           </IconButton>
           <IconButton>
