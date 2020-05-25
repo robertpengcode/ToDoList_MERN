@@ -3,8 +3,6 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const Task = require("../../models/Task");
 
-//router.get("/", (req, res) => res.send("task route"));
-
 router.get("/", async (req, res, next) => {
   try {
     const tasks = await Task.find();
@@ -58,38 +56,38 @@ router.post(
 
 router.put("/:id/done", async (req, res, next) => {
   const id = req.params.id;
-    try {
-      const updateTask = await Task.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            completed: true
-          }
-        },
-        { new: true }
-      );
-      return res.send(updateTask);
-    } catch (err) {
-      console.log("err put");
-    }
+  try {
+    const updateTask = await Task.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          completed: true
+        }
+      },
+      { new: true }
+    );
+    return res.send(updateTask);
+  } catch (err) {
+    console.log("err put");
+  }
 });
 
 router.put("/:id/undo", async (req, res, next) => {
   const id = req.params.id;
-    try {
-      const updateTask = await Task.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            completed: false
-          }
-        },
-        { new: true }
-      );
-      return res.send(updateTask);
-    } catch (err) {
-      console.log("err put");
-    }
+  try {
+    const updateTask = await Task.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          completed: false
+        }
+      },
+      { new: true }
+    );
+    return res.send(updateTask);
+  } catch (err) {
+    console.log("err put");
+  }
 });
 
 router.delete("/:id", async (req, res, next) => {

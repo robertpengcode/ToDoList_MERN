@@ -38,10 +38,8 @@ const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
   const createDate = moment(date).format("l");
   const dueDate = moment(due).format("l");
   const taskId = task._id;
-  const taskCompleted = task.completed;
 
   return (
-    //null
     <Card className={classes.root}>
       <CardActions>
         {task.important ? <StarRateIcon color="secondary" /> : null}
@@ -53,12 +51,12 @@ const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
             <EditIcon />
           </IconButton>
         ) : (
-          <IconButton onClick={() => handleUndo(taskId, taskCompleted)}>
+          <IconButton onClick={() => handleUndo(taskId)}>
             <UndoIcon />
           </IconButton>
         )}
         {!task.completed ? (
-          <IconButton onClick={() => handleDone(taskId, taskCompleted)}>
+          <IconButton onClick={() => handleDone(taskId)}>
             <DoneIcon />
           </IconButton>
         ) : (
@@ -80,25 +78,3 @@ const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
 };
 
 export default TaskCard;
-
-//const [expanded, setExpanded] = React.useState(false);
-//aria-label="delete"
-//aria-label="edit"
-//aria-label="done"
-//aria-label="save"
-{
-  /* <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions> */
-}
-
-// action={
-//   <IconButton aria-label="settings">
-//     <MoreVertIcon />
-//   </IconButton>
-// }

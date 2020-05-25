@@ -15,12 +15,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     width: "100%",
     marginLeft: 0,
-    marginTop: "1rem",
+    marginTop: "1rem"
   },
   gridList: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    justifyContent: "flex-start"
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)"
@@ -42,7 +42,12 @@ const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
           {tasks
             .filter(task => task.completed === false && task.history === false)
             .map(task => (
-              <TaskCard key={task._id} task={task} deleteTask={deleteTask} handleDone={handleDone}/>
+              <TaskCard
+                key={task._id}
+                task={task}
+                deleteTask={deleteTask}
+                handleDone={handleDone}
+              />
             ))}
         </GridList>
 
@@ -53,7 +58,12 @@ const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
           {tasks
             .filter(task => task.completed === true && task.history === false)
             .map(task => (
-              <TaskCard key={task._id} task={task} deleteTask={deleteTask} handleUndo={handleUndo}/>
+              <TaskCard
+                key={task._id}
+                task={task}
+                deleteTask={deleteTask}
+                handleUndo={handleUndo}
+              />
             ))}
         </GridList>
       </Container>
@@ -62,5 +72,3 @@ const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
 };
 
 export default Tasks;
-
-

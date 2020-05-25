@@ -29,7 +29,6 @@ class App extends Component {
   async deleteTask(id) {
     try {
       await axios.delete(`/api/tasks/${id}`);
-      console.log("deleted!!!!!", id);
       this.setState({
         tasks: this.state.tasks.filter(_task => _task._id !== id)
       });
@@ -38,10 +37,9 @@ class App extends Component {
     }
   }
 
-  async handleDone(id, completed) {
+  async handleDone(id) {
     try {
-      const updatedTask = (await axios.put(`/api/tasks/${id}/done`))
-        .data;
+      const updatedTask = (await axios.put(`/api/tasks/${id}/done`)).data;
       console.log("update client", updatedTask);
       this.setState({
         tasks: [
@@ -54,10 +52,9 @@ class App extends Component {
     }
   }
 
-  async handleUndo(id, completed) {
+  async handleUndo(id) {
     try {
-      const updatedTask = (await axios.put(`/api/tasks/${id}/undo`))
-        .data;
+      const updatedTask = (await axios.put(`/api/tasks/${id}/undo`)).data;
       console.log("update client", updatedTask);
       this.setState({
         tasks: [

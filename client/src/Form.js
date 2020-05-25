@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-//import { makeStyles } from "@material-ui/core/styles";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -23,7 +22,6 @@ class Form extends Component {
       important: false,
       dueDate: new Date()
     };
-    //this.onSubmit = this.onSubmit.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,12 +43,11 @@ class Form extends Component {
 
   async handleSubmit(ev) {
     ev.preventDefault();
-    console.log('sumbit!')
     const task = {
-        name: this.state.name,
-        important: this.state.important,
-        dueDate: this.state.dueDate
-    }
+      name: this.state.name,
+      important: this.state.important,
+      dueDate: this.state.dueDate
+    };
     try {
       const newTask = (await axios.post("/api/tasks", task)).data;
       this.props.createTask(newTask);
@@ -60,20 +57,16 @@ class Form extends Component {
         dueDate: new Date()
       });
     } catch (ex) {
-      console.log(ex)
+      console.log(ex);
     }
   }
 
   render() {
-    //const classes = useStyles();
-    //const { task } = this.state;
     const { name, important, dueDate } = this.state;
     const { handleDateChange, handleCancel, handleSubmit } = this;
-    // console.log("name", name);
-    // console.log("important", important);
-    // console.log("dueDate", dueDate);
+
     return (
-      <FormGroup >
+      <FormGroup>
         <TextField
           id="standard-basic"
           label="Task"
@@ -121,47 +114,3 @@ class Form extends Component {
 }
 
 export default Form;
-
-//   const useStyles = makeStyles({
-//     desStyle: {
-//       color: "black",
-//       fontSize: 18
-//     },
-//     root: {
-//       //maxWidth: 250,
-//       width: 250,
-//       background: "#fff59d",
-//       margin: "1rem",
-//       //maxHeight: 250
-//       height: 250
-//     }
-//   });
-
-//   async componentDidMount() {
-//     const tasks = (await axios.get("/api/tasks")).data;
-//     this.setState({ tasks });
-//   }
-
-{
-  /* <FormControlLabel
-          control={
-            <Checkbox
-            //   checked={state.checkedA}
-            //   onChange={handleChange}
-            //   name="checkedA"
-            />
-          }
-          label="Important"
-        />
-
-<FormControlLabel
-          control={
-            <Checkbox
-              icon={<StarBorderIcon />}
-              checkedIcon={<StarRateIcon />}
-              name="checkedH"
-            />
-          }
-          label="Important"
-        /> */
-}
