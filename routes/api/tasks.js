@@ -39,6 +39,7 @@ router.post(
         dueDate,
         completed,
       });
+      console.log(task);
       await task.save();
       res.send(task);
     } catch (err) {
