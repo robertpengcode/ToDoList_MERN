@@ -29,7 +29,14 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     //console.log(req.body);
-    const { name, category, description, important, dueDate, completed } = req.body;
+    const {
+      name,
+      category,
+      description,
+      important,
+      dueDate,
+      completed
+    } = req.body;
     try {
       const task = new Task({
         name,
@@ -37,9 +44,9 @@ router.post(
         description,
         important,
         dueDate,
-        completed,
+        completed
       });
-      console.log(task);
+      //console.log(task);
       await task.save();
       res.send(task);
     } catch (err) {
@@ -49,16 +56,51 @@ router.post(
   }
 );
 
-router.delete('/:id', async (req, res, next) => {
-    const id = req.params.id
-    console.log('id rounte', id);
+router.put("/:id/done", async (req, res, next) => {
+  const id = req.params.id;
     try {
-      await Task.deleteOne({_id: id});
-      res.json({msg: 'deleted!'});
+      const updateTask = await Task.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            completed: true
+          }
+        },
+        { new: true }
+      );
+      return res.send(updateTask);
     } catch (err) {
-      console.log('err!!!')
-      //next(err)
+      console.log("err put");
     }
-})
+});
+
+router.put("/:id/undo", async (req, res, next) => {
+  const id = req.params.id;
+    try {
+      const updateTask = await Task.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            completed: false
+          }
+        },
+        { new: true }
+      );
+      return res.send(updateTask);
+    } catch (err) {
+      console.log("err put");
+    }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    await Task.deleteOne({ _id: id });
+    res.json({ msg: "deleted!" });
+  } catch (err) {
+    console.log("err delte");
+    //next(err)
+  }
+});
 // sendStatus(204).
 module.exports = router;

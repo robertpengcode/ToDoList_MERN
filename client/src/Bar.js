@@ -26,7 +26,7 @@ const today = moment().format('MMMM Do YYYY');
 
 function Bar() {
   const classes = useStyles();  
-  console.log(today);
+  //console.log(today);
 
   return (
     <AppBar position="static" >

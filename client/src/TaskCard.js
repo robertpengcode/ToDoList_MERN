@@ -7,8 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-//import FavoriteIcon from "@material-ui/icons/Favorite";
-//import ShareIcon from "@material-ui/icons/Share";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
@@ -33,43 +31,42 @@ const useStyles = makeStyles({
   }
 });
 
-const TaskCard = ({ task, deleteTask }) => {
+const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
   const classes = useStyles();
   const date = task.createDate;
   const due = task.dueDate;
   const createDate = moment(date).format("l");
   const dueDate = moment(due).format("l");
   const taskId = task._id;
+  const taskCompleted = task.completed;
 
   return (
+    //null
     <Card className={classes.root}>
-      {!task.completed ? (
-        <CardActions>
-          {task.important ? <StarRateIcon color="secondary" /> : null}
-          <IconButton onClick={() => deleteTask(taskId)}>
-            <DeleteIcon />
-          </IconButton>
+      <CardActions>
+        {task.important ? <StarRateIcon color="secondary" /> : null}
+        <IconButton onClick={() => deleteTask(taskId)}>
+          <DeleteIcon />
+        </IconButton>
+        {!task.completed ? (
           <IconButton>
             <EditIcon />
           </IconButton>
-          <IconButton>
-            <DoneIcon />
-          </IconButton>
-        </CardActions>
-      ) : (
-        <CardActions>
-          {task.important ? <StarRateIcon color="secondary" /> : null}
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-          <IconButton>
+        ) : (
+          <IconButton onClick={() => handleUndo(taskId, taskCompleted)}>
             <UndoIcon />
           </IconButton>
+        )}
+        {!task.completed ? (
+          <IconButton onClick={() => handleDone(taskId, taskCompleted)}>
+            <DoneIcon />
+          </IconButton>
+        ) : (
           <IconButton>
             <SaveIcon />
           </IconButton>
-        </CardActions>
-      )}
+        )}
+      </CardActions>
       <CardHeader title={task.name} subheader={`Create On: ${createDate}`} />
       {task.dueDate ? (
         <CardContent>

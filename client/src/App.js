@@ -13,6 +13,8 @@ class App extends Component {
     };
     this.createTask = this.createTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.handleDone = this.handleDone.bind(this);
+    this.handleUndo = this.handleUndo.bind(this);
   }
 
   async componentDidMount() {
@@ -21,37 +23,75 @@ class App extends Component {
   }
 
   createTask(task) {
-    this.setState({tasks: [...this.state.tasks, task]});
+    this.setState({ tasks: [...this.state.tasks, task] });
   }
 
   async deleteTask(id) {
     try {
       await axios.delete(`/api/tasks/${id}`);
-      console.log('deleted!!!!!', id)
-      this.setState({tasks: this.state.tasks.filter(_task => _task._id !== id)});
+      console.log("deleted!!!!!", id);
+      this.setState({
+        tasks: this.state.tasks.filter(_task => _task._id !== id)
+      });
+    } catch (ex) {
+      console.log(ex);
     }
-    catch(ex) {
-      console.log(ex)
+  }
+
+  async handleDone(id, completed) {
+    try {
+      const updatedTask = (await axios.put(`/api/tasks/${id}/done`))
+        .data;
+      console.log("update client", updatedTask);
+      this.setState({
+        tasks: [
+          ...this.state.tasks.filter(_task => _task._id !== id),
+          updatedTask
+        ]
+      });
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  async handleUndo(id, completed) {
+    try {
+      const updatedTask = (await axios.put(`/api/tasks/${id}/undo`))
+        .data;
+      console.log("update client", updatedTask);
+      this.setState({
+        tasks: [
+          ...this.state.tasks.filter(_task => _task._id !== id),
+          updatedTask
+        ]
+      });
+    } catch (ex) {
+      console.log(ex);
     }
   }
 
   render() {
     const { tasks } = this.state;
-    const {createTask, deleteTask} = this;
+    const { createTask, deleteTask, handleDone, handleUndo } = this;
     return (
-      // <Fragment>
-      //   <Bar />
-      //   <Tasks tasks={tasks} />
-      // </Fragment>
-
-    <Grid container direction="column">
-      <Grid item><Bar /></Grid>
-      <Grid item container >
-        <Grid item xs={12} sm={9}><Tasks tasks={tasks} deleteTask={deleteTask}/></Grid>
-        <Grid item xs={12} sm={3}><Form createTask={createTask}/></Grid>
+      <Grid container direction="column">
+        <Grid item>
+          <Bar />
+        </Grid>
+        <Grid item container>
+          <Grid item xs={12} sm={9}>
+            <Tasks
+              tasks={tasks}
+              deleteTask={deleteTask}
+              handleDone={handleDone}
+              handleUndo={handleUndo}
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Form createTask={createTask} />
+          </Grid>
+        </Grid>
       </Grid>
-    </Grid>
-
     );
   }
 }

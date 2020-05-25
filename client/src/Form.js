@@ -20,7 +20,7 @@ class Form extends Component {
     super(props);
     this.state = {
       name: "",
-      important: "",
+      important: false,
       dueDate: new Date()
     };
     //this.onSubmit = this.onSubmit.bind(this);
@@ -60,7 +60,6 @@ class Form extends Component {
         dueDate: new Date()
       });
     } catch (ex) {
-      //this.setState({ error: ex.response.data.message });
       console.log(ex)
     }
   }
@@ -70,9 +69,9 @@ class Form extends Component {
     //const { task } = this.state;
     const { name, important, dueDate } = this.state;
     const { handleDateChange, handleCancel, handleSubmit } = this;
-    console.log("name", name);
-    console.log("important", important);
-    console.log("dueDate", dueDate);
+    // console.log("name", name);
+    // console.log("important", important);
+    // console.log("dueDate", dueDate);
     return (
       <FormGroup >
         <TextField
@@ -86,7 +85,6 @@ class Form extends Component {
             <Checkbox
               icon={<StarBorderIcon />}
               checkedIcon={<StarRateIcon />}
-              name="checkedH"
               checked={this.state.important}
               onChange={ev => this.setState({ important: ev.target.checked })}
             />
@@ -104,7 +102,6 @@ class Form extends Component {
             label="Task Due Date"
             value={dueDate}
             onChange={date => handleDateChange(date)}
-            //onChange={ev => this.setState({dueDate: ev.target.dueDate })}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}

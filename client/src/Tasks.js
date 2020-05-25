@@ -5,7 +5,6 @@ import GridList from "@material-ui/core/GridList";
 import Container from "@material-ui/core/Container";
 import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Tasks = ({ tasks, deleteTask }) => {
+const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
   const classes = useStyles();
   console.log(tasks);
   if (!tasks) {
@@ -43,7 +42,7 @@ const Tasks = ({ tasks, deleteTask }) => {
           {tasks
             .filter(task => task.completed === false && task.history === false)
             .map(task => (
-              <TaskCard key={task._id} task={task} deleteTask={deleteTask}/>
+              <TaskCard key={task._id} task={task} deleteTask={deleteTask} handleDone={handleDone}/>
             ))}
         </GridList>
 
@@ -54,7 +53,7 @@ const Tasks = ({ tasks, deleteTask }) => {
           {tasks
             .filter(task => task.completed === true && task.history === false)
             .map(task => (
-              <TaskCard key={task._id} task={task} />
+              <TaskCard key={task._id} task={task} deleteTask={deleteTask} handleUndo={handleUndo}/>
             ))}
         </GridList>
       </Container>
