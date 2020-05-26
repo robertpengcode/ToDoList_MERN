@@ -90,6 +90,25 @@ router.put("/:id/undo", async (req, res, next) => {
   }
 });
 
+router.put("/:id/save", async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const updateTask = await Task.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          history: true
+        }
+      },
+      { new: true }
+    );
+    return res.send(updateTask);
+  } catch (err) {
+    console.log("err put");
+  }
+});
+
+
 router.delete("/:id", async (req, res, next) => {
   const id = req.params.id;
   try {

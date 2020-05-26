@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   }
 });
 
-const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
+const TaskCard = ({ task, deleteTask, handleDone, handleUndo, handleSave }) => {
   const classes = useStyles();
   const date = task.createDate;
   const due = task.dueDate;
@@ -60,7 +60,7 @@ const TaskCard = ({ task, deleteTask, handleDone, handleUndo }) => {
             <DoneIcon />
           </IconButton>
         ) : (
-          <IconButton>
+          <IconButton onClick={() => handleSave(taskId)}>
             <SaveIcon />
           </IconButton>
         )}

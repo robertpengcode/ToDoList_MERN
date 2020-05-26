@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import Bar from "./Bar";
 import Tasks from "./Tasks";
 import Form from "./Form";
+import History from "./History";
 
 class App extends Component {
   constructor() {
@@ -15,6 +16,7 @@ class App extends Component {
     this.deleteTask = this.deleteTask.bind(this);
     this.handleDone = this.handleDone.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   async componentDidMount() {
@@ -40,7 +42,7 @@ class App extends Component {
   async handleDone(id) {
     try {
       const updatedTask = (await axios.put(`/api/tasks/${id}/done`)).data;
-      console.log("update client", updatedTask);
+      console.log("update done", updatedTask);
       this.setState({
         tasks: [
           ...this.state.tasks.filter(_task => _task._id !== id),
@@ -55,7 +57,22 @@ class App extends Component {
   async handleUndo(id) {
     try {
       const updatedTask = (await axios.put(`/api/tasks/${id}/undo`)).data;
-      console.log("update client", updatedTask);
+      console.log("update undo", updatedTask);
+      this.setState({
+        tasks: [
+          ...this.state.tasks.filter(_task => _task._id !== id),
+          updatedTask
+        ]
+      });
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  async handleSave(id) {
+    try {
+      const updatedTask = (await axios.put(`/api/tasks/${id}/save`)).data;
+      console.log("update save", updatedTask);
       this.setState({
         tasks: [
           ...this.state.tasks.filter(_task => _task._id !== id),
@@ -69,26 +86,32 @@ class App extends Component {
 
   render() {
     const { tasks } = this.state;
-    const { createTask, deleteTask, handleDone, handleUndo } = this;
+    const { createTask, deleteTask, handleDone, handleUndo, handleSave } = this;
     return (
-      <Grid container direction="column">
-        <Grid item>
-          <Bar />
-        </Grid>
-        <Grid item container>
-          <Grid item xs={12} sm={9}>
-            <Tasks
-              tasks={tasks}
-              deleteTask={deleteTask}
-              handleDone={handleDone}
-              handleUndo={handleUndo}
-            />
+      <Fragment>
+        <Grid container direction="column">
+          <Grid item>
+            <Bar />
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <Form createTask={createTask} />
+          <Grid item container>
+            <Grid item xs={12} sm={9}>
+              <Tasks
+                tasks={tasks}
+                deleteTask={deleteTask}
+                handleDone={handleDone}
+                handleUndo={handleUndo}
+                handleSave={handleSave}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Form createTask={createTask} />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+        <Grid item xs={12} sm={12}>
+          <History tasks={tasks} />
+        </Grid>
+      </Fragment>
     );
   }
 }

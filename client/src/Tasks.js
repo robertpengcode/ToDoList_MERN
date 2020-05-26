@@ -27,14 +27,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
+const Tasks = ({ tasks, deleteTask, handleDone, handleUndo, handleSave }) => {
   const classes = useStyles();
   console.log(tasks);
   if (!tasks) {
     return <h1>loading</h1>;
   } else {
     return (
-      <Container maxWidth="lg" className={classes.root}>
+      <Container maxWidth="xl" className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
           <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">Current</ListSubheader>
@@ -63,6 +63,7 @@ const Tasks = ({ tasks, deleteTask, handleDone, handleUndo }) => {
                 task={task}
                 deleteTask={deleteTask}
                 handleUndo={handleUndo}
+                handleSave={handleSave}
               />
             ))}
         </GridList>
